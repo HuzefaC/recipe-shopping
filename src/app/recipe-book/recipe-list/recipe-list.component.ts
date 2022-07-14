@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { RecipeService } from 'src/app/services/recipe.service';
 import { Recipe } from '../recipe.model';
 
 @Component({
@@ -7,25 +8,11 @@ import { Recipe } from '../recipe.model';
   styleUrls: ['./recipe-list.component.css'],
 })
 export class RecipeListComponent implements OnInit {
-  @Output() seletedRecipe: EventEmitter<Recipe> = new EventEmitter<Recipe>();
-  recipes: Recipe[] = [
-    new Recipe(
-      'Piri Piri Fried Chicken',
-      'This crispy South African inspired fried chicken recipe is made with a dry seasoning blend of bird’s eye chili peppers, paprika, salt, lemon peels, oregano, and garlic—it’s finger licking good!',
-      '/assets/img/chicken.jpg'
-    ),
-    new Recipe(
-      'Piri Piri Fried Chicken',
-      'This crispy South African inspired fried chicken recipe is made with a dry seasoning blend of bird’s eye chili peppers, paprika, salt, lemon peels, oregano, and garlic—it’s finger licking good!',
-      '/assets/img/chicken.jpg'
-    ),
-  ];
+  recipes: Recipe[] = [];
 
-  constructor() {}
+  constructor(private recipeService: RecipeService) {}
 
-  ngOnInit(): void {}
-
-  onRecipeItemClick(recipe) {
-    this.seletedRecipe.emit(recipe);
+  ngOnInit(): void {
+    this.recipes = this.recipeService.getRecipies();
   }
 }
